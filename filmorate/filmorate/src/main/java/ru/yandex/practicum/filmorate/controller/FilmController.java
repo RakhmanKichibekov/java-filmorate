@@ -36,16 +36,16 @@ public class FilmController {
 
     private void post(Film film) throws ValidationException {
         if(film.getName()==null || film.getName().isBlank()) {
-            log.warn("Введено пустое значение имени ");
+            log.warn("Произошла ошибка валидации при создании фильма ");
             throw new ValidationException("Введено пустое значение имени ");
         } else if (film.getDescription().length() > 200) {
-            log.warn("Введено слишком длинное описание, более 200 символов");
+            log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Введено слишком длинное описание, более 200 символов");
-        } else if (film.getDuration().isNegative()) {
+        } else if (film.getDuration().isNegative() || film.getDuration().isZero()) {
             log.warn("Продолжительность фильма не может быть отрицательной");
             throw new ValidationException("Продолжительность фильма не может быть отрицательной");
-        } else if (film.getRelease().isBefore(ChronoLocalDateTime.from(LocalDate.of(1895, 12, 28)))){
-            log.warn("Тогда еще не было фильмов");
+        } else if (film.getRelease().isBefore(LocalDate.of(1895, 12, 28))){
+            log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Тогда еще не было фильмов");
         } else {
             films.put(film.getId(), film);
