@@ -32,11 +32,11 @@ public class UserController {
         return user;
     }
 
-    public void post(User user) throws ValidationException {
+    private void post(User user) throws ValidationException {
         if ((user.getEmail() == null || user.getEmail().isBlank()) && !(user.getEmail().contains("@"))) {
             log.warn("Введено пустое значение email или забыт символ - @ ");
             throw new ValidationException("Введено пустое значение email или забыт символ - @ ");
-        } else if (user.getLogin() == null || user.getLogin().isBlank()) {
+        } else if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
             log.warn("Введено пустой логин ");
             throw new ValidationException("Введено пустой логин ");
         } else if (user.getDisplayName() == null || user.getDisplayName().isBlank()) {

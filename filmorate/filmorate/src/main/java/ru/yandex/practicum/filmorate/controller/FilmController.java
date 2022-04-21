@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -42,6 +44,9 @@ public class FilmController {
         } else if (film.getDuration().isNegative()) {
             log.warn("Продолжительность фильма не может быть отрицательной");
             throw new ValidationException("Продолжительность фильма не может быть отрицательной");
+        } else if (film.getRelease().isBefore(ChronoLocalDateTime.from(LocalDate.of(1895, 12, 28)))){
+            log.warn("Тогда еще не было фильмов");
+            throw new ValidationException("Тогда еще не было фильмов");
         } else {
             films.put(film.getId(), film);
             log.info("Добавлен фильм ");
