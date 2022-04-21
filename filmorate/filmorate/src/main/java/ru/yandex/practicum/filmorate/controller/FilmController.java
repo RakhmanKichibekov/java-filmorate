@@ -17,20 +17,20 @@ public class FilmController {
     private final Map<Long, Film> films = new HashMap<>();
 
     @GetMapping("/films")
-    public Collection<Film> findAll() {
-        return films.values();
+    public ArrayList<Film> findAll() {
+        return new ArrayList<>(films.values());
     }
 
     @PostMapping(value = "/films")
     public Film create(@RequestBody Film film) throws ValidationException {
         if(film.getName()==null || film.getName().isBlank()) {
             log.warn("Произошла ошибка валидации при создании фильма ");
-            throw new ValidationException("Введено пустое значение имени ");
+            throw new ValidationException("Введено пустое значение имени");
         } else if (film.getDescription().length() > 200) {
             log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Введено слишком длинное описание, более 200 символов");
         } else if (film.getDuration().isNegative() || film.getDuration().isZero()) {
-            log.warn("Продолжительность фильма не может быть отрицательной");
+            log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Продолжительность фильма не может быть отрицательной");
         } else if (film.getRelease().isBefore(LocalDate.of(1895, 12, 28))){
             log.warn("Произошла ошибка валидации при создании фильма");
