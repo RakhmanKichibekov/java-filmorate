@@ -14,7 +14,7 @@ import java.util.*;
 @RestController
 public class FilmController {
 
-    private final Map<Integer, Film> films = new HashMap<>();
+    private final Map<Long, Film> films = new HashMap<>();
 
     @GetMapping("/films")
     public Collection<Film> findAll() {
@@ -23,18 +23,29 @@ public class FilmController {
 
     @PostMapping(value = "/films")
     public Film create(@RequestBody Film film) throws ValidationException {
-        post(film);
-        return film;
+        if(film.getName()==null || film.getName().isBlank()) {
+            log.warn("Произошла ошибка валидации при создании фильма ");
+            throw new ValidationException("Введено пустое значение имени ");
+        } else if (film.getDescription().length() > 200) {
+            log.warn("Произошла ошибка валидации при создании фильма");
+            throw new ValidationException("Введено слишком длинное описание, более 200 символов");
+        } else if (film.getDuration().isNegative() || film.getDuration().isZero()) {
+            log.warn("Продолжительность фильма не может быть отрицательной");
+            throw new ValidationException("Продолжительность фильма не может быть отрицательной");
+        } else if (film.getRelease().isBefore(LocalDate.of(1895, 12, 28))){
+            log.warn("Произошла ошибка валидации при создании фильма");
+            throw new ValidationException("Тогда еще не было фильмов");
+        } else {
+            Long newID = Film.setIdCounter();
+            film.setId(newID);
+            films.put(newID, film);
+            log.info("Добавлен фильм ");
+            return film;
+        }
     }
 
     @PutMapping(value = "/films")
     public Film update(@RequestBody Film film) throws ValidationException {
-        post(film);
-
-        return film;
-    }
-
-    private void post(Film film) throws ValidationException {
         if(film.getName()==null || film.getName().isBlank()) {
             log.warn("Произошла ошибка валидации при создании фильма ");
             throw new ValidationException("Введено пустое значение имени ");
@@ -50,6 +61,7 @@ public class FilmController {
         } else {
             films.put(film.getId(), film);
             log.info("Добавлен фильм ");
+            return film;
         }
     }
 }
