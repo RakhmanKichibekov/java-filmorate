@@ -24,7 +24,7 @@ public class FilmController {
     @PostMapping(value = "/films")
     public Film create(@RequestBody Film film) throws ValidationException {
         if(film.getName()==null || film.getName().isBlank()) {
-            log.warn("Произошла ошибка валидации при создании фильма ");
+            log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Введено пустое значение имени");
         } else if (film.getDescription().length() > 200) {
             log.warn("Произошла ошибка валидации при создании фильма");
@@ -47,8 +47,8 @@ public class FilmController {
     @PutMapping(value = "/films")
     public Film update(@RequestBody Film film) throws ValidationException {
         if(film.getName()==null || film.getName().isBlank()) {
-            log.warn("Произошла ошибка валидации при создании фильма ");
-            throw new ValidationException("Введено пустое значение имени ");
+            log.warn("Произошла ошибка валидации при создании фильма");
+            throw new ValidationException("Введено пустое значение имени");
         } else if (film.getDescription().length() > 200) {
             log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Введено слишком длинное описание, более 200 символов");
@@ -60,7 +60,7 @@ public class FilmController {
             throw new ValidationException("Тогда еще не было фильмов");
         } else {
             films.put(film.getId(), film);
-            log.info("Добавлен фильм ");
+            log.info("Добавлен фильм");
             return film;
         }
     }
