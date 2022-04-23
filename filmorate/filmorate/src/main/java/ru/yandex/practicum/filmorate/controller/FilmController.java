@@ -27,7 +27,7 @@ public class FilmController {
         } else if (film.getDescription().length() > 200) {
             log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Введено слишком длинное описание, более 200 символов");
-        } else if (film.getDuration().isNegative() || film.getDuration().isZero()) {
+        } else if (film.getDuration() <=0 ) {
             log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Продолжительность фильма не может быть отрицательной");
         } else if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))){
@@ -50,7 +50,7 @@ public class FilmController {
         } else if (film.getDescription().length() > 200) {
             log.warn("Произошла ошибка валидации при создании фильма");
             throw new ValidationException("Введено слишком длинное описание, более 200 символов");
-        } else if (film.getDuration().isNegative() || film.getDuration().isZero()) {
+        } else if (film.getDuration() <=0 ) {
             log.warn("Продолжительность фильма не может быть отрицательной");
             throw new ValidationException("Продолжительность фильма не может быть отрицательной");
         } else if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))){

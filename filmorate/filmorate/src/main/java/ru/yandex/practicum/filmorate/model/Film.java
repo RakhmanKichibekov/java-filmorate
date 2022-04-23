@@ -12,7 +12,7 @@ public class Film {
     private Long id;
     private String description;
     private LocalDate releaseDate;
-    private Duration duration;
+    private Integer duration;
     private static AtomicLong counter = new AtomicLong(0);
 
     public static void setCounter(AtomicLong counter) {
