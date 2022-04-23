@@ -3,13 +3,10 @@ package ru.yandex.practicum.filmorate.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +16,7 @@ public class UserController {
     private final Map<Long, User> users = new HashMap<>();
 
     @GetMapping("/users")
-    public ArrayList<User> findAll() {
+    public ArrayList<User> getAll() {
         return new ArrayList<>(users.values());
     }
 
@@ -37,8 +34,8 @@ public class UserController {
         }
         Long newId = User.setIdCounter();
         user.setId(newId);
-        if (user.getDisplayName() == null || user.getDisplayName().isBlank()) {
-            user.setDisplayName(user.getLogin());
+        if (user.getName() == null || user.getName().isBlank()) {
+            user.setName(user.getLogin());
         }
         Long newID = User.setIdCounter();
         user.setId(newID);
@@ -59,8 +56,8 @@ public class UserController {
             log.warn("Вы из будущего ?");
             throw new ValidationException("Вы из будущего ?");
         }
-        if (user.getDisplayName() == null || user.getDisplayName().isBlank()) {
-            user.setDisplayName(user.getLogin());
+        if (user.getName() == null || user.getName().isBlank()) {
+            user.setName(user.getLogin());
         }
         users.put(user.getId(), user);
         log.info("Добавлен пользователь");

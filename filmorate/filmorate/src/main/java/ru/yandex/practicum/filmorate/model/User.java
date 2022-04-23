@@ -3,15 +3,14 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Data
 public class User {
+    private String login;
+    private String name;
     private Long id;
     private String email;
-    private String login;
-    private String displayName;
     private LocalDate birthday;
     private static AtomicLong counter = new AtomicLong(0);
 

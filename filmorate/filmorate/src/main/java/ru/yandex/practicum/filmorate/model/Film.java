@@ -4,15 +4,14 @@ import lombok.Data;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Data
 public class Film {
-    private Long id;
     private String name;
+    private Long id;
     private String description;
-    private LocalDate release;
+    private LocalDate releaseDate;
     private Duration duration;
     private static AtomicLong counter = new AtomicLong(0);
 
