@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ae8f183c-c085-42ad-a322-b90d8d822f4f",
+		"_postman_id": "e337606f-5df6-47d0-9784-7fa89c1b51fe",
 		"name": "API Test Sprint 1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -45,11 +45,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8094/users",
+							"raw": "{{baseUrl}}/users",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"users"
 							]
@@ -71,11 +70,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8094/users",
+									"raw": "{{baseUrl}}/users",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"users"
 									]
@@ -132,11 +130,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8094/users",
+							"raw": "{{baseUrl}}/users",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"users"
 							]
@@ -158,11 +155,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8094/users",
+									"raw": "{{baseUrl}}/users",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"users"
 									]
@@ -219,11 +215,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8094/users",
+							"raw": "{{baseUrl}}/users",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"users"
 							]
@@ -245,11 +240,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8094/users",
+									"raw": "{{baseUrl}}/users",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"users"
 									]
@@ -293,11 +287,10 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8094/users",
+							"raw": "{{baseUrl}}/users",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"users"
 							]
@@ -309,16 +302,11 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "localhost:8094/users",
+									"raw": "{{baseUrl}}/users",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"users"
 									]
@@ -372,7 +360,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"nisi eiusmod\",\n  \"description\": \"adipisicing\",\n  \"releaseDate\": \"1986-03-25\",\n  \"duration\": 100\n}",
+							"raw": "{\n  \"name\": \"nisi eiusmod\",\n  \"description\": \"adipisicing\",\n  \"releaseDate\": \"1967-03-25\",\n  \"duration\": 100\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -380,11 +368,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8094/films",
+							"raw": "{{baseUrl}}/films",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"films"
 							]
@@ -406,11 +393,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8094/films",
+									"raw": "{{baseUrl}}/films",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"films"
 									]
@@ -467,11 +453,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8094/films",
+							"raw": "{{baseUrl}}/films",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"films"
 							]
@@ -493,11 +478,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8094/films",
+									"raw": "{{baseUrl}}/films",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"films"
 									]
@@ -546,7 +530,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"nisi eiusmod\",\n  \"id\": 1,\n  \"description\": \"adipisicing\",\n  \"releaseDate\": \"1987-03-25\",\n  \"duration\": 120\n}",
+							"raw": "{\n  \"name\": \"nisi eiusmod\",\n  \"id\": 1,\n  \"description\": \"adipisicing\",\n  \"releaseDate\": \"1967-03-25\",\n  \"duration\": 120\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -554,11 +538,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8094/films",
+							"raw": "{{baseUrl}}/films",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"films"
 							]
@@ -580,11 +563,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8094/films",
+									"raw": "{{baseUrl}}/films",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"films"
 									]
@@ -628,11 +610,10 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8094/films",
+							"raw": "{{baseUrl}}/films",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8094",
 							"path": [
 								"films"
 							]
@@ -645,11 +626,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8094/films",
+									"raw": "{{baseUrl}}/films",
 									"host": [
-										"localhost"
+										"{{baseUrl}}"
 									],
-									"port": "8094",
 									"path": [
 										"films"
 									]
