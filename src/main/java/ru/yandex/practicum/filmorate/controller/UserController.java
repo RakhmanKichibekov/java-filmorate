@@ -22,30 +22,23 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public User create(@RequestBody User user) throws ValidationException {
-        if (user.getEmail() == null || user.getEmail().isEmpty() || !user.getEmail().contains("@")) {
-            log.warn("Введено пустое значение email или забыт символ - @");
-            throw new ValidationException("Введено пустое значение email или забыт символ - @");
-        } else if (user.getLogin() == null || user.getLogin().isEmpty() || user.getLogin().contains(" ")) {
-            log.warn("Введено пустой логин");
-            throw new ValidationException("Введено пустой логин");
-        } else if (user.getBirthday().isAfter(LocalDate.now())) {
-            log.warn("Вы из будущего ?");
-            throw new ValidationException("Вы из будущего ?");
-        }
-        Long newId = User.setIdCounter();
-        user.setId(newId);
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
+        validation(user);
         Long newID = User.setIdCounter();
         user.setId(newID);
-        users.put(newId, user);
+        users.put(newID, user);
         log.info("Добавлен пользователь");
         return user;
     }
 
     @PutMapping(value = "/users")
     public User update(@RequestBody User user) throws ValidationException {
+        validation(user);
+        users.put(user.getId(), user);
+        log.info("Добавлен пользователь");
+        return user;
+    }
+
+    public void validation(User user) {
         if (user.getEmail() == null || user.getEmail().isEmpty() || !user.getEmail().contains("@")) {
             log.warn("Введено пустое значение email или забыт символ - @");
             throw new ValidationException("Введено пустое значение email или забыт символ - @");
@@ -59,8 +52,5 @@ public class UserController {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-        users.put(user.getId(), user);
-        log.info("Добавлен пользователь");
-        return user;
     }
 }

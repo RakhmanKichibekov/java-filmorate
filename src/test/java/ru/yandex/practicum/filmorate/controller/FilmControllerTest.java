@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FilmControllerTest {
 
-    FilmController filmController;
+    private FilmController filmController;
 
     @BeforeEach
     public void beforeEach() {
@@ -36,6 +36,7 @@ public class FilmControllerTest {
         ValidationException ex = assertThrows(ValidationException.class, () -> filmController.create(film));
         assertEquals("Введено пустое значение имени", ex.getMessage());
     }
+
     @Test
     public void createFilmNameConsistsOfSpacesThrowsValidationException() {
         Film film = new Film();
