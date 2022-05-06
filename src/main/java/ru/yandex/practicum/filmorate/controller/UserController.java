@@ -1,56 +1,83 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RestController
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
+
+    private final UserService userService;
     private final Map<Long, User> users = new HashMap<>();
 
-    @GetMapping("/users")
+    @GetMapping
     public ArrayList<User> getAll() {
-        return new ArrayList<>(users.values());
+        return userService.getAll();
     }
 
-    @PostMapping(value = "/users")
+    @PostMapping
     public User create(@RequestBody User user) throws ValidationException {
-        validation(user);
-        Long newID = User.setIdCounter();
-        user.setId(newID);
-        users.put(newID, user);
         log.info("Добавлен пользователь");
-        return user;
+        return userService.create(user);
     }
 
-    @PutMapping(value = "/users")
+    @PutMapping
     public User update(@RequestBody User user) throws ValidationException {
-        validation(user);
-        users.put(user.getId(), user);
         log.info("Добавлен пользователь");
-        return user;
+        return userService.update(user);
     }
 
-    public void validation(User user) {
-        if (user.getEmail() == null || user.getEmail().isEmpty() || !user.getEmail().contains("@")) {
-            log.warn("Введено пустое значение email или забыт символ - @");
-            throw new ValidationException("Введено пустое значение email или забыт символ - @");
-        } else if (user.getLogin() == null || user.getLogin().isEmpty() || user.getLogin().contains(" ")) {
-            log.warn("Введено пустой логин");
-            throw new ValidationException("Введено пустой логин");
-        } else if (user.getBirthday().isAfter(LocalDate.now())) {
-            log.warn("Вы из будущего ?");
-            throw new ValidationException("Вы из будущего ?");
-        }
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
+    @GetMapping("/{userId}")
+    public User getById(@PathVariable Long userId) throws UserNotFoundException {
+        return userService.getById(userId);
     }
+
+    @PutMapping("/{userId}/friends/{friendId}")
+    public User addToFriends(@PathVariable Long userId, @PathVariable Long friendId) throws UserNotFoundException {
+        return userService.addFriends(userId, friendId);
+    }
+
+    @DeleteMapping("/{userId}/friends/{friendId}")
+    public User deleteFromFriends(@PathVariable Long userId, @PathVariable Long friendId) throws UserNotFoundException {
+        log.debug("Входящий запрос на удаление из друзей пользователя с id = {} у пользователя c id = {}",
+                friendId, userId);
+        return userService.deleteFriends(userId, friendId);
+    }
+
+    @GetMapping("/{userId}/friends")
+    public List<User> getFriendsForUser(@PathVariable Long userId) throws UserNotFoundException {
+        return userService.getFriends(userId);
+    }
+
+    @GetMapping("/{userId}/friends/common/{otherUserId}")
+    public List<User> getCommonFriends(@PathVariable Long userId, @PathVariable Long otherUserId)
+            throws UserNotFoundException {
+        return userService.getCommonFriends(userId, otherUserId);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleUserNotFound(final UserNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleServerError(final RuntimeException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
 }

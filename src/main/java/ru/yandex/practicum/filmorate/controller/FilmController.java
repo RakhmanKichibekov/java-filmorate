@@ -1,57 +1,83 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
+import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Slf4j
 @RestController
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("/films")
 public class FilmController {
 
+    private final FilmService filmService;
     private final Map<Long, Film> films = new HashMap<>();
-    private static final LocalDate DATE_FIRST_FILM = LocalDate.of(1895, 12, 28);
 
-    @GetMapping("/films")
+    @GetMapping
     public ArrayList<Film> getAll() {
-        return new ArrayList<>(films.values());
+        return filmService.getAll();
     }
 
-    @PostMapping(value = "/films")
+    @PostMapping
     public Film create(@RequestBody Film film) throws ValidationException {
-        validation(film);
-        Long newID = Film.setIdCounter();
-        film.setId(newID);
-        films.put(newID, film);
         log.info("Добавлен фильм ");
-        return film;
+        return filmService.create(film);
     }
 
-    @PutMapping(value = "/films")
+    @PutMapping
     public Film update(@RequestBody Film film) throws ValidationException {
-        validation(film);
-        films.put(film.getId(), film);
         log.info("Добавлен фильм");
-        return film;
+        return filmService.update(film);
     }
 
-    public void validation(Film film) {
-        if (film.getName() == null || film.getName().isBlank()) {
-            log.warn("Произошла ошибка валидации при создании фильма");
-            throw new ValidationException("Введено пустое значение имени");
-        } else if (film.getDescription().length() > 200) {
-            log.warn("Произошла ошибка валидации при создании фильма");
-            throw new ValidationException("Введено слишком длинное описание, более 200 символов");
-        } else if (film.getDuration() <= 0) {
-            log.warn("Произошла ошибка валидации при создании фильма");
-            throw new ValidationException("Продолжительность фильма не может быть отрицательной");
-        } else if (film.getReleaseDate().isBefore(DATE_FIRST_FILM)) {
-            log.warn("Произошла ошибка валидации при создании фильма");
-            throw new ValidationException("Тогда еще не было фильмов");
-        }
+    @GetMapping("/{filmId}")
+    public Film getById(@PathVariable Long filmId) throws FilmNotFoundException {
+        return filmService.getById(filmId);
+    }
+
+    @PutMapping("/{filmId}/like/{userId}")
+    public Film likeFilm(@PathVariable Long filmId, @PathVariable Long userId) throws
+            FilmNotFoundException, UserNotFoundException {
+        return filmService.likeFilm(filmId, userId);
+    }
+
+    @DeleteMapping("/{filmId}/like/{userId}")
+    public Film deleteFilm(@PathVariable Long filmId, @PathVariable Long userId) throws
+            FilmNotFoundException, UserNotFoundException {
+        return filmService.deleteFilm(filmId, userId);
+    }
+
+    @GetMapping("/popular")
+    public List<Film> getCountsFilms(@RequestParam(defaultValue = "10") int count) {
+        return filmService.getCountFilms(count);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleFilmNotFound(final FilmNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleServerError(final RuntimeException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleUserNotFound(final UserNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
     }
 }
