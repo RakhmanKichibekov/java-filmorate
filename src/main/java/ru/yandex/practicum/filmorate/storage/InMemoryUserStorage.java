@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage{
-    HashMap<Long, User> users = new HashMap<>();
+    private HashMap<Long, User> users = new HashMap<>();
 
     @Override
     public User create(User user) {
