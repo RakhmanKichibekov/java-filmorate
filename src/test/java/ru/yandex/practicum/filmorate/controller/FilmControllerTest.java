@@ -17,11 +17,6 @@ public class FilmControllerTest {
 
     private FilmController filmController;
 
-    @BeforeEach
-    public void beforeEach() {
-        filmController = new FilmController();
-    }
-
     @AfterEach
     public void afterEach() {
         Film.setCounter(new AtomicLong(0));
