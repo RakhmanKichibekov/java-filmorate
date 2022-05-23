@@ -1,11 +1,11 @@
 # java-filmorate
 Template repository for Filmorate project.
-![image](https://user-images.githubusercontent.com/95489935/169809185-7e787cf5-b13b-41c0-a318-b205f5b223fa.png)
+![image](https://user-images.githubusercontent.com/95489935/169868958-256a5c15-26b5-4df5-a02f-9e713789daaa.png)
 
 -- взаимные друзья:   
-SELECT u.Friend_id, f.Friend_id FROM Friend AS u  
-JOIN Friend AS f ON f.User_id = u.Friend_id  
-WHERE u.Status=f.Status='подтверждено';    
+SELECT u.friend_id, f.friend_id FROM friends AS u  
+JOIN friend AS f ON f.user_id = u.friend_id  
+WHERE u.status IS TRUE;    
 
 --Лайки  
 SELECT f.Like_id FROM Likes as f  
