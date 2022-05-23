@@ -9,7 +9,6 @@ WHERE u.Status=f.Status='подтверждено';
 
 --Лайки  
 SELECT f.Like_id FROM Likes as f  
-JOIN Likes AS u ON f.Like_id=u.Like_id  
 
 
 
