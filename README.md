@@ -1,6 +1,6 @@
 # java-filmorate
 Template repository for Filmorate project.
-![image](https://user-images.githubusercontent.com/95489935/170956619-f4e02ace-edc9-45c4-b1e8-0826a686091e.png)
+![image](https://user-images.githubusercontent.com/95489935/171004743-c09946ca-3c94-4fab-b78b-b27a80e04b40.png)
 
 -- взаимные друзья:   
 SELECT u.friend_id, f.friend_id FROM friends AS u  
